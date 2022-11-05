@@ -9,12 +9,6 @@
 Place for the BST functions from Exercise 1.
 
 */
-struct _Node {
-    int value;
-    struct _Node* left;
-    struct _Node* right;
-};
-
 Node* addNode(Node *root, int value)
 {
     Node *newNode = malloc(sizeof(Node));
