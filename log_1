@@ -1,0 +1,13 @@
+/******** TEST OF PART 1 ********/
+
+Avg of unbalanced BST = 28906.039062
+Avg of balanced BST = 28906.039062
+Difference in avgs = 0.000000
+
+ /******** END OF PART 1 ********/
+
+/******** TEST OF PART 2 ********/
+
+count: 0
+avg: -1.000000
+Test for Part2 fail

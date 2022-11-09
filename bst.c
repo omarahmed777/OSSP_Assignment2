@@ -40,7 +40,7 @@ Node* addNode(Node *root, int value)
             prev->left = newNode;
     }
 
-    return newNode;
+    return root;
 }
 
 Node* freeSubtree(Node *N) {
@@ -49,6 +49,7 @@ Node* freeSubtree(Node *N) {
     freeSubtree(N->left);
     freeSubtree(N->right);
     free(N);
+    return NULL;
 }
 
 void removeSubtreeWorker(Node *R, int value) {
@@ -149,7 +150,7 @@ Node* removeNode(Node* root, int value)
             root->left = removeNode(root->left, root->data); // delete the duplicate node
         }
     }
-    return root; // parent node can update reference
+    return root;
 }
 
 int numberLeaves(Node *N) {
@@ -192,6 +193,73 @@ int sum(Node *N) {
     else return N->data + sum(N->left) + sum(N->right); //Order of traversal doesn't matter
 }
 
+float avgSubtree(Node *N)
+{
+	// TODO: Implement this function
+    if (N == NULL) //Base case
+        return -1;
+    double avg = (float)sum(N) / (float)countNodes(N);
+    return (float)avg;
+}
+
+/*
+ * Helper function for balanceTree
+ * Converts tree into sorted array
+ */
+int treeToArr(Node *N, int arr[], int i) {
+    if (N == NULL)
+        return i;
+    if (N->right != NULL) {
+        i = treeToArr(N->right, arr, i);
+    }
+    arr[i] = N->data;
+    i++;
+    if (N->left != NULL) {
+        i = treeToArr(N->left, arr, i);
+    }
+    return i;
+}
+/*
+ * balanceTree Helper Function
+ * Takes node, array, start, and end
+ * Recursively runs through tree, taking middle of array each time
+ * Correctly balances inverted tree
+ */
+Node* balanceTreeUtil(int arr[], int start, int end) {
+    if (start > end) //Base case to break recursion
+        return NULL;
+
+    int mid = (start + end) / 2; //Get middle elem of arr
+    Node *N = (Node *)malloc(sizeof(Node));
+    N->data = arr[mid];
+    N->right = balanceTreeUtil(arr, start, mid-1); //Left half of array will be right children
+    N->left = balanceTreeUtil(arr, mid+1, end); //Right half of array will be left children
+    return N;
+}
+
+// This functions converts an unbalanced BST to a balanced BST
+Node* balanceTree(Node* root)
+{
+	// TODO: Implement this function
+    int *sortedArr;
+    int length = countNodes(root);
+    if ((sortedArr = (int *)malloc(sizeof(int) * length)) == NULL) {
+        printf("malloc failed");
+        exit(-1);
+    }
+    // Fill sortedArr with nodes
+    treeToArr(root, sortedArr, 0);
+    //removeSubtree(root, root->data);
+    root = balanceTreeUtil(sortedArr, 0, length-1);
+    free(sortedArr);
+    return root;
+
+}
+
+/*
+ * ------------------------------ ARCHIVE ------------------------------
+ */
+
 /*
  * Returns total number of nodes in tree
  * Recursion atm, could take a while potentially with large trees?
@@ -202,54 +270,3 @@ int sum(Node *N) {
     else
         return 1 + countNodes(root->left) + countNodes(root->right); //Order of traversal doesn't matter
 }*/
-
-float avgSubtree(Node *N)
-{
-	// TODO: Implement this function
-    if (N == NULL) //Base case
-        return -1;
-    float avg = (float)sum(N) / (float)countNodes(N);
-    return avg;
-}
-/*
- * Helper function for balanceTree
- * Converts tree into sorted array
- */
-void treeToArr(Node *N, int arr[], int i) {
-    if (N == NULL)
-        return;
-    //Traverse fully to the right
-    treeToArr(N->right, arr, i);
-    //Store current node into array
-    arr[i] = N->data;
-    i++;
-    //Traverse fully to the left
-    treeToArr(N->left, arr, i);
-}
-/*
- * balanceTree Helper Function
- * Takes node, array, start, and end
- * Recursively runs through tree, taking middle of array each time
- * Correctly balances inverted tree
- */
-Node* balanceTreeUtil(Node* root, int arr[], int start, int end) {
-    if (start > end) //Base case to break recursion
-        return NULL;
-    int mid = (start+end) / 2; //Get middle elem of arr
-    root->data = arr[mid]; //Middle elem of sorted array is root
-    root->right = balanceTreeUtil(root->right, arr, start, mid-1); //Left half of array will be right children
-    root->left = balanceTreeUtil(root->left, arr, mid-1, end); //Right half of array will be left children
-    return root;
-}
-// This functions converts an unbalanced BST to a balanced BST
-Node* balanceTree(Node* root)
-{
-	// TODO: Implement this function
-    int sortedArr[countNodes(root)]; //Space for every node in tree
-    // Fill sortedArr with nodes
-    treeToArr(root, sortedArr, 0);
-    int length = sizeof(sortedArr)/sizeof(sortedArr[0]); //Computes actual length of array, not allocated mem
-    root = balanceTreeUtil(root, sortedArr, 0, length-1);
-    return root;
-
-}
