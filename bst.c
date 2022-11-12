@@ -206,19 +206,19 @@ float avgSubtree(Node *N)
  * Helper function for balanceTree
  * Converts tree into sorted array
  */
-int treeToArr(Node *N, int arr[], int i) {
+int treeToArr(Node *N, int *arr, int i) {
     if (N == NULL)
         return i;
-    if (N->right != NULL) {
+    //if (N->right != NULL) { //Traverse right subtree first
         i = treeToArr(N->right, arr, i);
-    }
-    arr[i] = N->data;
-    i++;
-    if (N->left != NULL) {
+    //}
+    arr[i++] = N->data; //Then root
+    //if (N->left != NULL) { //Finally, left subtree
         i = treeToArr(N->left, arr, i);
-    }
+    //}
     return i;
 }
+
 /*
  * balanceTree Helper Function
  * Takes node, array, start, and end
@@ -269,4 +269,27 @@ Node* balanceTree(Node* root)
         return 0;
     else
         return 1 + countNodes(root->left) + countNodes(root->right); //Order of traversal doesn't matter
+}*/
+
+//This doesn't recurse down the tree properly, but could be faster since it uses iteration
+/*void treeToArr(Node *N, int arr[], int length)
+{
+    int *p = arr;
+    if (N == NULL)
+        return;
+    for (int i=0; i<length; i++)
+    {
+        while (N->right)
+        {
+            N = N->right;
+            arr[*p+i] = N->data;
+        }
+        arr[*p+i] = N->data;
+        while (N->left)
+        {
+            N = N->left;
+            arr[*p+i] = N->data;
+        }
+    }
+    return;
 }*/
