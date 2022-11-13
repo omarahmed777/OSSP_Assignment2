@@ -9,7 +9,7 @@
 Place for the BST functions from Exercise 1.
 
 */
-Node* addNode(Node *root, int value)
+Node *addNode(Node *root, int value)
 {
     Node *newNode = malloc(sizeof(Node));
     newNode->data = value;
@@ -20,7 +20,7 @@ Node* addNode(Node *root, int value)
     Node *prev = NULL;
 
     temp = root;
-    while(temp) {
+    while (temp) {
         prev = temp;
         if (temp->data > newNode->data)
             temp = temp->right;
@@ -31,7 +31,7 @@ Node* addNode(Node *root, int value)
             return NULL;
         }
     }
-    if (prev==NULL)
+    if (prev == NULL)
         root = newNode;
     else {
         if (prev->data > newNode->data)
@@ -43,7 +43,8 @@ Node* addNode(Node *root, int value)
     return root;
 }
 
-Node* freeSubtree(Node *N) {
+Node *freeSubtree(Node *N)
+{
     if (N == NULL)
         return NULL;
     freeSubtree(N->left);
@@ -52,17 +53,20 @@ Node* freeSubtree(Node *N) {
     return NULL;
 }
 
-void removeSubtreeWorker(Node *R, int value) {
+void removeSubtreeWorker(Node *R, int value)
+{
     if (R == NULL)
         return;
 
-    if (R->left && R->left->data == value) {
+    if (R->left && R->left->data == value)
+    {
         freeSubtree(R->left);
         R->left = NULL;
         return;
     }
 
-    if (R->right && R->right->data == value) {
+    if (R->right && R->right->data == value)
+    {
         freeSubtree(R->right);
         R->right = NULL;
         return;
@@ -74,11 +78,13 @@ void removeSubtreeWorker(Node *R, int value) {
         removeSubtreeWorker(R->right, value);
 }
 
-Node* removeSubtree(Node *R, int value) {
+Node *removeSubtree(Node *R, int value)
+{
     if (R == NULL)
         return NULL;
 
-    if (R->data == value) {
+    if (R->data == value)
+    {
         freeSubtree(R);
         return NULL;
     }
@@ -88,9 +94,9 @@ Node* removeSubtree(Node *R, int value) {
 
 void displaySubtree(Node *N)
 {
-    if (N==NULL)
+    if (N == NULL)
     {
-        return ;
+        return;
     }
     displaySubtree(N->right);
     printf("%d\n", N->data);
@@ -99,8 +105,8 @@ void displaySubtree(Node *N)
 
 int countNodes(Node *N)
 {
-    int count=0;
-    if(N==NULL)
+    int count = 0;
+    if (N == NULL)
         return 0;
     count = count + countNodes(N->right);
     count = count + countNodes(N->left);
@@ -109,41 +115,50 @@ int countNodes(Node *N)
 }
 
 // this is the most complicated task
-Node* removeNode(Node* root, int value)
+Node *removeNode(Node *root, int value)
 {
     // Ensure root isn't null.
-    if (root == NULL) {
+    if (root == NULL)
+    {
         return NULL;
     }
 
-    if (value > root->data) {  // Value is in the left sub-tree.
+    if (value > root->data)
+    {  // Value is in the left sub-tree.
         root->left = removeNode(root->left, value);
-    } else if (value < root->data) { // Value is in the right sub-tree.
+    } else if (value < root->data)
+    { // Value is in the right sub-tree.
         root->right = removeNode(root->right, value);
-    } else { // Found the correct node with value
+    } else
+    { // Found the correct node with value
         // Check the three cases - no child, 1 child, 2 child...
         // No Children
-        if (root->left == NULL && root->right == NULL) {
+        if (root->left == NULL && root->right == NULL)
+        {
             free(root);
             root = NULL;
         }
             // 1 child (on the right)
-        else if (root->left == NULL) {
+        else if (root->left == NULL)
+        {
             Node *temp = root; // save current node
             root = root->right;
             free(temp);
         }
             // 1 child (on the left)
-        else if (root->right == NULL) {
+        else if (root->right == NULL)
+        {
             Node *temp = root; // save current node
             root = root->left;
             free(temp);
         }
             // Two children
-        else {
+        else
+        {
             // find minimal value of right subtree
             Node *temp = root->left;
-            while(temp->right != NULL) {
+            while (temp->right != NULL)
+            {
                 temp = temp->right;
             }
             root->data = temp->data; // duplicate the node
@@ -153,7 +168,8 @@ Node* removeNode(Node* root, int value)
     return root;
 }
 
-int numberLeaves(Node *N) {
+int numberLeaves(Node *N)
+{
     if (N == NULL)
         return 0;
 
@@ -163,7 +179,8 @@ int numberLeaves(Node *N) {
     return numberLeaves(N->left) + numberLeaves(N->right);
 }
 
-int nodeDepth(Node *R, Node *N) {
+int nodeDepth(Node *R, Node *N)
+{
     if (R == NULL || N == NULL)
         return -1;
 
@@ -187,7 +204,8 @@ int nodeDepth(Node *R, Node *N) {
  * avgSubtree Helper Function
  * Returns sum of all nodes in tree
  */
-int sum(Node *N) {
+int sum(Node *N)
+{
     if (N == NULL)
         return 0;
     else return N->data + sum(N->left) + sum(N->right); //Order of traversal doesn't matter
@@ -195,27 +213,24 @@ int sum(Node *N) {
 
 float avgSubtree(Node *N)
 {
-	// TODO: Implement this function
+    // TODO: Implement this function
     if (N == NULL) //Base case
         return -1;
-    double avg = (float)sum(N) / (float)countNodes(N);
-    return (float)avg;
+    double avg = (float) sum(N) / (float) countNodes(N);
+    return (float) avg;
 }
 
 /*
  * Helper function for balanceTree
  * Converts tree into sorted array
  */
-int treeToArr(Node *N, int *arr, int i) {
+int treeToArr(Node *N, int *arr, int i)
+{
     if (N == NULL)
         return i;
-    //if (N->right != NULL) { //Traverse right subtree first
-        i = treeToArr(N->right, arr, i);
-    //}
+    i = treeToArr(N->right, arr, i);
     arr[i++] = N->data; //Then root
-    //if (N->left != NULL) { //Finally, left subtree
-        i = treeToArr(N->left, arr, i);
-    //}
+    i = treeToArr(N->left, arr, i);
     return i;
 }
 
@@ -225,32 +240,35 @@ int treeToArr(Node *N, int *arr, int i) {
  * Recursively runs through tree, taking middle of array each time
  * Correctly balances inverted tree
  */
-Node* balanceTreeUtil(int arr[], int start, int end) {
+Node *balanceTreeUtil(int arr[], int start, int end)
+{
     if (start > end) //Base case to break recursion
         return NULL;
 
     int mid = (start + end) / 2; //Get middle elem of arr
-    Node *N = (Node *)malloc(sizeof(Node));
+    Node *N = (Node *) malloc(sizeof(Node));
     N->data = arr[mid];
-    N->right = balanceTreeUtil(arr, start, mid-1); //Left half of array will be right children
-    N->left = balanceTreeUtil(arr, mid+1, end); //Right half of array will be left children
+    N->right = balanceTreeUtil(arr, start, mid - 1); //Left half of array will be right children
+    N->left = balanceTreeUtil(arr, mid + 1, end); //Right half of array will be left children
     return N;
 }
 
 // This functions converts an unbalanced BST to a balanced BST
-Node* balanceTree(Node* root)
+Node *balanceTree(Node *root)
 {
-	// TODO: Implement this function
+    // TODO: Implement this function
     int *sortedArr;
     int length = countNodes(root);
-    if ((sortedArr = (int *)malloc(sizeof(int) * length)) == NULL) {
+    if ((sortedArr = (int *) malloc(sizeof(int) * length)) == NULL)
+    {
         printf("malloc failed");
         exit(-1);
     }
     // Fill sortedArr with nodes
     treeToArr(root, sortedArr, 0);
     //removeSubtree(root, root->data);
-    root = balanceTreeUtil(sortedArr, 0, length-1);
+    root = balanceTreeUtil(sortedArr, 0, length - 1);
+    //displaySubtree(root);
     free(sortedArr);
     return root;
 
