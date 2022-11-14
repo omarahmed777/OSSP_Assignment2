@@ -267,10 +267,11 @@ Node *balanceTree(Node *root)
     // Fill sortedArr with nodes
     treeToArr(root, sortedArr, 0);
     //removeSubtree(root, root->data); //-- caused seg faults
-    root = balanceTreeUtil(sortedArr, 0, length - 1);
+    //removeSubtree(root, root->data);
+    Node *root_balanced = balanceTreeUtil(sortedArr, 0, length - 1);
     //displaySubtree(root); //-- for debugging
     free(sortedArr);
-    return root;
+    return root_balanced;
 
 }
 

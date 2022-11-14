@@ -1,14 +1,14 @@
 pthread_rwlock_t rwlock = PTHREAD_RWLOCK_INITIALIZER;
-
+int count = 1; //count = 1 makes the if statement being < 4 more intuitive to read imo
 void *downtime()
 {
-    int count = 1; //count = 1 makes the while loop being < 4 more intuitive to read imo
-    while (count < 4)
-    { //Program ends after 3 downtimes.
+    if (count < 4)
+    {
         sleep(2);
+        pthread_rwlock_wrlock(&rwlock);
         root_balanced = balanceTree(root);
-        //freeSubtree(root); //-- causes sigabrt
-        count++;
+        pthread_rwlock_unlock(&rwlock);
+        count += 1;
     }
     return NULL;
 }
@@ -78,6 +78,24 @@ void *ServeClient(char *client)
 
 /*
  * -------------------- ARCHIVE --------------------
+ */
+
+/*
+ * In downtime()
+ */
+
+/*while (count < 4)
+{ //Program ends after 3 downtimes.
+    sleep(2);
+    pthread_rwlock_wrlock(&rwlock);
+    root_balanced = balanceTree(root);
+    //freeSubtree(root); //-- causes sigabrt
+    pthread_rwlock_unlock(&rwlock);
+    count++;
+}*/
+
+/*
+ * In ServeClient()
  */
 
 //printf("LINE: %s", line);
