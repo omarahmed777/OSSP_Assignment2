@@ -9,7 +9,7 @@ Any updates to the number will be made here. Hopefully people will gain the mark
 
 If you are one of those people who feels they deserve more marks and are looking here for someone else's implementation PLEASE fill out a complaint form in order to get the marks that you deserve.
 
-### Complaint form
-[Here is the complaint form.](https://docs.google.com/forms/d/e/1FAIpQLSdmj8u8xNvS4Eg5pvwWpUGMWPRojDh2AJ4FCwL0dh8MqWSoUA/viewform)
+### Complaint Form
+[Here is the form to fill out a complaint.](https://docs.google.com/forms/d/e/1FAIpQLSdmj8u8xNvS4Eg5pvwWpUGMWPRojDh2AJ4FCwL0dh8MqWSoUA/viewform)
 
-Again PLEASE fill this out in order to gain the marks that you deserve.
+Again PLEASE fill this out in order to raise an official complaint so that you get the marks you deserve.
