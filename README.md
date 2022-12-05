@@ -3,7 +3,7 @@
 Final Grade: 15/15 - 1 of 14 people to gain full marks
 
 ## Disclaimer
-It seems the marking was extremely poorly handled and many more should have also achieved full marks, and quite rightly so
+It seems the marking was extremely poorly handled and many more should have also achieved full marks, and quite rightly are angry and confused at the module team.
 
 Any updates to the number will be made here. Hopefully people will gain the marks that they deserve.
 
